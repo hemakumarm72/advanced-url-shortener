@@ -4,6 +4,7 @@ import { urlModel } from '../../models/urls'
 import { UrlType } from '../../models/@types'
 import { generateUniqueId } from '../../utils/random'
 import { handleResponse } from '../../middleware/requestHandle'
+import { invalidException } from '../../utils/apiErrorHandler'
 
 const findUniqueCode = async () => {
   try {
@@ -59,6 +60,17 @@ export const redirectShortenUrl = async (
   next: NextFunction,
 ) => {
   try {
+    const { alias } = req.params
+
+    // TODO: Redis implemented....
+
+    const getUrl = await urlModel.getByFieldAndValue('alias', alias) // TODO: mongodb
+
+    if (!getUrl) throw invalidException('url not found')
+
+    res.redirect(getUrl.longUrl)
+
+    return handleResponse(res, 200, {})
   } catch (error) {
     next(error)
   }
