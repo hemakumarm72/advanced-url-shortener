@@ -21,6 +21,7 @@ type UrlType = {
   urlId: string
   longUrl: string
   alias: string
+  topic: string | null
   isCustomAlias: boolean
 }
 

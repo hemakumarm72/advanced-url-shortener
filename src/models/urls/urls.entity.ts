@@ -6,6 +6,7 @@ const UrlsSchema = new mongoose.Schema(
     urlId: { type: String },
     longUrl: { type: String },
     alias: { type: String }, // TODO: short url.
+    topic: { type: String, default: null },
     isCustomAlias: { type: Boolean, default: false },
   },
   { timestamps: true },

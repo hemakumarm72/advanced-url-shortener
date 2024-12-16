@@ -1,6 +1,9 @@
 ﻿import { Request, Response, NextFunction } from 'express'
 import RandomString from 'randomstring'
 import { urlModel } from '../../models/urls'
+import { UrlType } from '../../models/@types'
+import { generateUniqueId } from '../../utils/random'
+import { handleResponse } from '../../middleware/requestHandle'
 
 const findUniqueCode = async () => {
   try {
@@ -32,8 +35,19 @@ export const createShortenUrl = async (
   try {
     const { longUrl, customAlias, topic } = req.body
 
-    const shortUrl = customAlias ? customAlias : await findUniqueCode()
-    
+    const alias = customAlias ? customAlias : await findUniqueCode()
+
+    const add: UrlType = {
+      urlId: generateUniqueId(),
+      longUrl,
+      alias,
+      topic,
+      isCustomAlias: customAlias ? true : false,
+    }
+
+    await urlModel.add(add)
+
+    return handleResponse(res, 200, {})
   } catch (error) {
     next(error)
   }
