@@ -1,0 +1,26 @@
+# Ignore:
+/dist
+node_modules
+package-lock.json
+
+.env
+.yarn.lock
+
+.DS_Store
+
+# test
+
+/coverage
+
+.vscode
+
+
+# Logs
+/logs
+
+
+.env
+.env.dev
+
+
+database-info.json
