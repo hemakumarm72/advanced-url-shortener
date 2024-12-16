@@ -1,5 +1,5 @@
 import { Location, ParamSchema } from 'express-validator'
-
+import { REGEXP_URL } from './regexp'
 
 export const VALIDATION_STRING = (
   where: Location,
@@ -13,7 +13,6 @@ export const VALIDATION_STRING = (
   isLength: { options: { min: 1, max: length }, errorMessage: '4015' },
   errorMessage: subStatusCode,
 })
-
 
 export const VALIDATION_NUMBER = (
   where: Location,
@@ -35,4 +34,21 @@ export const VALIDATION_BOOLEAN = (
   notEmpty: checkBy !== 'optional' ? true : false,
 })
 
-
+export const VALIDATION_LONG_URL = (
+  where: Location,
+  subStatusCode: string = '4014',
+  checkBy?: 'optional',
+): ParamSchema => ({
+  in: [where],
+  isString: checkBy === 'optional' ? false : { errorMessage: subStatusCode },
+  notEmpty: checkBy === 'optional' ? false : true,
+  isLength: { options: { min: 1, max: length }, errorMessage: '4015' },
+  errorMessage: subStatusCode,
+  matches:
+    checkBy === 'optional'
+      ? false
+      : {
+          options: [REGEXP_URL],
+          errorMessage: subStatusCode,
+        },
+})

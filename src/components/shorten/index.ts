@@ -1,8 +1,22 @@
-﻿import express from 'express';
-import * as controller from './shorten.controller';
-import { checkSchema } from 'express-validator';
-import { } from './shorten.validation';
+﻿import express from 'express'
+import * as controller from './shorten.controller'
+import { checkSchema } from 'express-validator'
+import { CREATE_URL, GET_URL } from './shorten.validation'
+import { checkValidation } from '../../utils/validation'
 
-const router = express.Router();
+const router = express.Router()
 
-export default router;
+router.post(
+  '/',
+  checkSchema(CREATE_URL),
+  checkValidation,
+  controller.createShortenUrl,
+)
+router.get(
+  '/:alias',
+  checkSchema(GET_URL),
+  checkValidation,
+  controller.redirectShortenUrl,
+)
+
+export default router
