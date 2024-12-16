@@ -5,7 +5,7 @@ import { UrlType } from '../../models/@types'
 import { generateUniqueId } from '../../utils/random'
 import { handleResponse } from '../../middleware/requestHandle'
 import { invalidException } from '../../utils/apiErrorHandler'
-
+import * as service from './shorten.service'
 const findUniqueCode = async () => {
   try {
     let length = 4,
@@ -36,6 +36,9 @@ export const createShortenUrl = async (
   try {
     const { longUrl, customAlias, topic } = req.body
 
+    if (customAlias) {
+    }
+
     const alias = customAlias ? customAlias : await findUniqueCode()
 
     const add: UrlType = {
@@ -46,9 +49,15 @@ export const createShortenUrl = async (
       isCustomAlias: customAlias ? true : false,
     }
 
-    await urlModel.add(add)
+    await service.createShortenUrl(add)
 
-    return handleResponse(res, 200, {})
+    const getData = await urlModel.getByFieldAndValue('urlId', add.urlId)
+    const baseUrl = process.env.BASE_URL
+
+    return handleResponse(res, 200, {
+      shortUrl: `${baseUrl}/${add.alias}`,
+      createdAt: getData?.createdAt,
+    })
   } catch (error) {
     next(error)
   }
@@ -68,9 +77,7 @@ export const redirectShortenUrl = async (
 
     if (!getUrl) throw invalidException('url not found')
 
-    res.redirect(getUrl.longUrl)
-
-    return handleResponse(res, 200, {})
+    return res.redirect(getUrl.longUrl)
   } catch (error) {
     next(error)
   }

@@ -13,6 +13,8 @@ type UsersType = {
   refreshToken: string
   status: 'active' | 'suspended'
   deletedAt: Date | null
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 type UpdateUserType = Partial<UsersType>
@@ -23,6 +25,8 @@ type UrlType = {
   alias: string
   topic: string | null
   isCustomAlias: boolean
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 type UrlDocument = mongoose.Document & UrlType
