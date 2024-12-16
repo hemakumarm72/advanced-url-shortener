@@ -2,7 +2,7 @@ import { ClientSession } from 'mongoose'
 
 import { NewUserDocument, UpdateUserDocument } from '../@types'
 import { Plan } from '../plan/plan.entity'
-import { Users } from './user.entity'
+import { Users } from './users.entity'
 
 export const getUserByEmail = async (email: string) => {
   try {

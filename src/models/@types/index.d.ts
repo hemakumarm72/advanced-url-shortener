@@ -16,3 +16,10 @@ type UsersType = {
 }
 
 type UpdateUserType = Partial<UsersType>
+
+type UrlType = {
+  urlId: string
+  longUrl: string
+  shortUrl: string
+  isCustomAlias: boolean
+}
