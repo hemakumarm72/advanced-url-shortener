@@ -20,6 +20,8 @@ type UpdateUserType = Partial<UsersType>
 type UrlType = {
   urlId: string
   longUrl: string
-  shortUrl: string
+  alias: string
   isCustomAlias: boolean
 }
+
+type UrlDocument = mongoose.Document & UrlType
