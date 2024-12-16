@@ -1,11 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 
-import { CognitoIdToken } from '../@types'
-import { invalidException, unauthorizedException } from './apiErrorHandler'
-import { setAwsCognito } from './helper'
-import { decodeJwt } from './jwt'
-
-
+import { invalidException } from './apiErrorHandler'
 
 export const isMaintainer = (
   req: Request,
@@ -15,7 +10,7 @@ export const isMaintainer = (
   try {
     const isMaintenances = process.env.IS_MAINTENANCES
     if (isMaintenances === 'true') {
-      throw invalidException('server maintenances', '10000') // TODO: 10000 server maintenances
+      throw invalidException('server maintenances', 10000) // TODO: 10000 server maintenances
     }
     next()
   } catch (err) {

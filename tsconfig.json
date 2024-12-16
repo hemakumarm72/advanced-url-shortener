@@ -66,6 +66,7 @@
     "resolveJsonModule": true,
     "typeRoots": [
       "./src/@types",
+      "./src/**/@types",
     ], /* List of folders to include type definitions from. */
   },
   "compileOnSave": true,
