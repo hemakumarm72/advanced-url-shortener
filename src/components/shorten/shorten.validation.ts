@@ -11,5 +11,5 @@ export const CREATE_URL: Schema = {
 }
 
 export const GET_URL: Schema = {
-  alias: VALIDATION_STRING('body'),
+  alias: VALIDATION_STRING('params'),
 }

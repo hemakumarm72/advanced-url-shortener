@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'
-import { UrlType, UrlDocument } from '../@types'
+import { UrlDocument } from '../@types'
 
 const UrlsSchema = new mongoose.Schema(
   {
     urlId: { type: String },
+    userId: { type: String },
     longUrl: { type: String },
     alias: { type: String }, // TODO: short url.
     topic: { type: String, default: null },

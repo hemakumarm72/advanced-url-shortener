@@ -10,7 +10,10 @@ export const VALIDATION_STRING = (
   in: [where],
   isString: checkBy === 'optional' ? false : { errorMessage: subStatusCode },
   notEmpty: checkBy === 'optional' ? false : true,
-  isLength: { options: { min: 1, max: length }, errorMessage: '4015' },
+  isLength: {
+    options: checkBy === 'optional' ? undefined : { min: 1, max: length },
+    errorMessage: '4015',
+  },
   errorMessage: subStatusCode,
 })
 
@@ -42,7 +45,10 @@ export const VALIDATION_LONG_URL = (
   in: [where],
   isString: checkBy === 'optional' ? false : { errorMessage: subStatusCode },
   notEmpty: checkBy === 'optional' ? false : true,
-  isLength: { options: { min: 1, max: length }, errorMessage: '4015' },
+  isLength: {
+    options: checkBy === 'optional' ? undefined : { min: 1, max: 255 },
+    errorMessage: '4015',
+  },
   errorMessage: subStatusCode,
   matches:
     checkBy === 'optional'

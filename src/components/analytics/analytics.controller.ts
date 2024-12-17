@@ -1,4 +1,48 @@
-﻿import { Request, Response, NextFunction } from 'express';
-import { Logger } from '../../../utils/log4';
-import * as service from './analytics.service';
-import { handleResponse } from '../../../middleware/requestHandle';
+﻿import { Request, Response, NextFunction } from 'express'
+
+export const getAnalyticsByAlias = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { alias } = req.params
+
+    
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const getTopic = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const getAnalyticsByTopic = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const getOverAllAnalytics = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+  } catch (error) {
+    next(error)
+  }
+}

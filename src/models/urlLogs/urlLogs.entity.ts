@@ -1,26 +1,27 @@
 import mongoose from 'mongoose'
-import { UrlType } from '../@types'
+import { UrlLogsDocument } from '../@types'
 
 const UrlLogsSchema = new mongoose.Schema(
   {
     logId: { type: String },
     urlId: { type: String },
-    ipAdrress: { type: String },
-    osName: {
+    geoIp: { type: String },
+    os: {
       type: String,
-      enum: ['windows', 'linux', 'andriod', 'ios', 'macOs'],
-      default: 'windows',
     },
-    deviceName: {
+    browser: {
       type: String,
-      enum: ['mobile', 'desktop'],
-      default: 'mobile',
     },
+    platform: { type: String },
+    browserVersion: {
+      type: String,
+    },
+    source: { type: String },
   },
   { timestamps: true },
 )
 
-export const UrlLogs = mongoose.model<UrlType>(
+export const UrlLogs = mongoose.model<UrlLogsDocument>(
   'UrlLogs',
   UrlLogsSchema,
   'urlLogs',

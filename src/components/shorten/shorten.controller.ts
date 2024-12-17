@@ -1,11 +1,13 @@
 ﻿import { Request, Response, NextFunction } from 'express'
 import RandomString from 'randomstring'
 import { urlModel } from '../../models/urls'
-import { UrlType } from '../../models/@types'
+import { UrlLogsType, UrlType } from '../../models/@types'
 import { generateUniqueId } from '../../utils/random'
 import { handleResponse } from '../../middleware/requestHandle'
 import { invalidException } from '../../utils/apiErrorHandler'
 import * as service from './shorten.service'
+import { Details } from 'express-useragent'
+
 const findUniqueCode = async () => {
   try {
     let length = 4,
@@ -34,7 +36,7 @@ export const createShortenUrl = async (
   next: NextFunction,
 ) => {
   try {
-    const { longUrl, customAlias, topic } = req.body
+    const { longUrl, customAlias, topic, userId } = req.body
 
     if (customAlias) {
     }
@@ -43,6 +45,7 @@ export const createShortenUrl = async (
 
     const add: UrlType = {
       urlId: generateUniqueId(),
+      userId,
       longUrl,
       alias,
       topic,
@@ -55,7 +58,7 @@ export const createShortenUrl = async (
     const baseUrl = process.env.BASE_URL
 
     return handleResponse(res, 200, {
-      shortUrl: `${baseUrl}/${add.alias}`,
+      shortUrl: `${baseUrl}/api/shorten/${add.alias}`,
       createdAt: getData?.createdAt,
     })
   } catch (error) {
@@ -77,7 +80,20 @@ export const redirectShortenUrl = async (
 
     if (!getUrl) throw invalidException('url not found')
 
-    return res.redirect(getUrl.longUrl)
+    const userAgent = req.useragent as Details
+    const urlLogs: UrlLogsType = {
+      logId: generateUniqueId(),
+      urlId: getUrl.urlId,
+      geoIp: req.headers['x-forwarded-for'] as string,
+      os: userAgent.os as string,
+      platform: userAgent.platform,
+      browser: userAgent.browser,
+      browserVersion: userAgent.version,
+      source: userAgent.source,
+    }
+    // await urlLogsModel.add(urlLogs)
+    service.urlLogs(urlLogs)
+    res.redirect(`${getUrl.longUrl}`)
   } catch (error) {
     next(error)
   }

@@ -21,6 +21,7 @@ type UpdateUserType = Partial<UsersType>
 
 type UrlType = {
   urlId: string
+  userId: string
   longUrl: string
   alias: string
   topic: string | null
@@ -30,3 +31,18 @@ type UrlType = {
 }
 
 type UrlDocument = mongoose.Document & UrlType
+
+type UrlLogsType = {
+  logId: string
+  urlId: string
+  geoIp: string
+  os: string
+  browser: string
+  platform: string
+  browserVersion: string
+  source: string
+}
+
+type UpdateUrlLogsType = Partial<UrlLogsType>
+
+type UrlLogsDocument = mongoose.Document & UrlLogsType

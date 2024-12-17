@@ -1,22 +1,22 @@
 import cors from 'cors'
 import path from 'path'
-
+import morgan from 'morgan'
 import express from 'express'
+import useragent from 'express-useragent'
 
-import dbConnect from '../models/dbConnect'
-import { errorRequestLogger, requestLogger } from '../utils/logger'
+import { connectMongo } from './mongo'
 
 export const config = async (app: express.Application) => {
   app
   app
-    .set('trust proxy', true) // Trust the proxy
+    .set('trust proxy', true) //IP Trust the proxy
 
-    .use(requestLogger)
-    .use(errorRequestLogger)
     .use(cors())
+    .use(morgan('dev'))
     .use(express.json())
+    .use(useragent.express())
 
-    .use(express.urlencoded({ extended: false }))
+    .use(express.urlencoded({ extended: true }))
 
     .get('/', (req, res) => {
       res.sendFile(path.join(__dirname, '../../public/index.html'))
@@ -24,15 +24,6 @@ export const config = async (app: express.Application) => {
     .get('/health', (req, res) => {
       return res.status(200).send()
     })
-  await dbConnect
-    .initialize()
-    .then(() => {
-      console.log(`Connected Mysql ${process.env.DB_DATABASE} DB.`)
-      // Start your application logic here
-    })
-    .catch((err: any) =>
-      console.log('Error during Data Source initialization:', err),
-    )
 
-  // await connectMongo()
+  await connectMongo()
 }
