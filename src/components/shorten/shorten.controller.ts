@@ -72,27 +72,31 @@ export const redirectShortenUrl = async (
   next: NextFunction,
 ) => {
   try {
-    const sessionId = req.session.id
-    const { alias } = req.params
+    const sessionUser = req.session.user
+    if (!sessionUser) {
+      req.session.user = { sessionId: req.session.id }
+    }
+    const sessionId = req.session.user?.sessionId
 
+    const { alias } = req.params
     // TODO: Redis implemented....
 
     const getUrl = await urlModel.getByFieldAndValue('alias', alias) // TODO: mongodb
 
     if (!getUrl) throw invalidException('url not found')
-
     const userAgent = req.useragent as Details
     const urlLogs: UrlLogsType = {
       logId: generateUniqueId(),
       urlId: getUrl.urlId,
-      sessionId,
-      geoIp: req.headers['x-forwarded-for'] as string,
+      sessionId: sessionId as string,
+      geoIp: (req.headers['x-forwarded-for'] as string) || '127.0.0.1',
       os: userAgent.os as string,
       platform: userAgent.platform,
       browser: userAgent.browser,
       browserVersion: userAgent.version,
       source: userAgent.source,
     }
+    req.session.save()
     // await urlLogsModel.add(urlLogs)
     service.urlLogs(urlLogs)
     res.redirect(`${getUrl.longUrl}`)
