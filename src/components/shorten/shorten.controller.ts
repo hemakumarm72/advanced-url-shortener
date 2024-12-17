@@ -72,6 +72,7 @@ export const redirectShortenUrl = async (
   next: NextFunction,
 ) => {
   try {
+    const sessionId = req.session.id
     const { alias } = req.params
 
     // TODO: Redis implemented....
@@ -84,6 +85,7 @@ export const redirectShortenUrl = async (
     const urlLogs: UrlLogsType = {
       logId: generateUniqueId(),
       urlId: getUrl.urlId,
+      sessionId,
       geoIp: req.headers['x-forwarded-for'] as string,
       os: userAgent.os as string,
       platform: userAgent.platform,

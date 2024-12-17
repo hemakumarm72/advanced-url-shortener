@@ -4,6 +4,7 @@ import { UrlLogsDocument } from '../@types'
 const UrlLogsSchema = new mongoose.Schema(
   {
     logId: { type: String },
+    sessionId: { type: String },
     urlId: { type: String },
     geoIp: { type: String },
     os: {

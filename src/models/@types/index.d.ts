@@ -34,6 +34,7 @@ type UrlDocument = mongoose.Document & UrlType
 
 type UrlLogsType = {
   logId: string
+  sessionId: string
   urlId: string
   geoIp: string
   os: string
