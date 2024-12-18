@@ -6,10 +6,12 @@ class UrlModel extends BaseModel<UrlDocument> {
     super(Urls)
   }
 
-  getUrlIdByUserId = async (userId: string): Promise<string[]> => {
+  getTopic = async (userId: string): Promise<string[]> => {
     try {
-      const result = Urls.find({ userId }).distinct('urlId')
-      return result
+      const result = await Urls.find({ userId, topic: { $ne: null } }).distinct(
+        'topic',
+      )
+      return result as string[]
     } catch (error) {
       return Promise.reject(error)
     }
