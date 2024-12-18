@@ -8,7 +8,7 @@ import RedisStore from 'rate-limit-redis'
 
 export const apiLimit = rateLimit({
   windowMs: 5 * 60 * 1000, // 5-minute window
-  max: 2, // Limit each IP to 15 requests per `window` (5 minutes)
+  max: 100, // Limit each IP to 15 requests per `window` (5 minutes)
   standardHeaders: true,
   legacyHeaders: false,
   store: new RedisStore({

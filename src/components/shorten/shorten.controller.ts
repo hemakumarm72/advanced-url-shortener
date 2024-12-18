@@ -53,7 +53,12 @@ export const createShortenUrl = async (
     }
 
     await service.createShortenUrl(add)
-
+    await redisConnect.set(
+      `shortUrl:${alias}`,
+      JSON.stringify(add),
+      'EX',
+      3600, // TODO: cache i will expired 3600 (1 hour)
+    )
     const getData = await urlModel.getByFieldAndValue('urlId', add.urlId)
     const baseUrl = process.env.BASE_URL
 
