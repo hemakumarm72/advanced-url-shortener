@@ -5,12 +5,14 @@ import { CREATE_URL, GET_URL } from './shorten.validation'
 import { checkValidation } from '../../utils/validation'
 import { visitedSession } from '../../middleware/session'
 import { isSession } from '../../utils/auth'
+import { apiLimit } from '../../middleware/apiLimit'
 
 const router = express.Router()
 
 router.post(
   '/',
   isSession,
+  apiLimit,
   checkSchema(CREATE_URL),
   checkValidation,
   controller.createShortenUrl,
