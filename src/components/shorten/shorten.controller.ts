@@ -7,6 +7,7 @@ import { handleResponse } from '../../middleware/requestHandle'
 import { invalidException } from '../../utils/apiErrorHandler'
 import * as service from './shorten.service'
 import { Details } from 'express-useragent'
+import { redisConnect } from '../../middleware/redis'
 
 const findUniqueCode = async () => {
   try {
@@ -69,18 +70,27 @@ export const redirectShortenUrl = async (
   next: NextFunction,
 ) => {
   try {
-    const sessionUser = req.session.user
-    if (!sessionUser) {
-      req.session.user = { sessionId: req.session.id }
-    }
     const sessionId = req.session.user?.sessionId
 
     const { alias } = req.params
     // TODO: Redis implemented....
 
-    const getUrl = await urlModel.getByFieldAndValue('alias', alias) // TODO: mongodb
+    const cachedUrl = await redisConnect.get(`shortUrl:${alias}`)
+    let getUrl
 
-    if (!getUrl) throw invalidException('url not found')
+    if (cachedUrl) {
+      getUrl = JSON.parse(cachedUrl)
+    } else {
+      getUrl = await urlModel.getByFieldAndValue('alias', alias) // TODO: mongodb
+      if (!getUrl) throw invalidException('url not found')
+      await redisConnect.set(
+        `shortUrl:${alias}`,
+        JSON.stringify(getUrl),
+        'EX',
+        3600, // TODO: cache i will expired 3600 (1 hour)
+      )
+    }
+
     const userAgent = req.useragent as Details
     const urlLogs: UrlLogsType = {
       logId: generateUniqueId(),
@@ -95,10 +105,13 @@ export const redirectShortenUrl = async (
       source: userAgent.source,
     }
     // await urlLogsModel.add(urlLogs)
-    userAgent.os !== 'unknown' ? service.urlLogs(urlLogs) : null
+    // Cache the URL in Redis
+
+    if (userAgent.os !== 'unknown') {
+      service.urlLogs(urlLogs)
+    }
     res.redirect(`${getUrl.longUrl}`)
   } catch (error) {
     next(error)
   }
 }
-
