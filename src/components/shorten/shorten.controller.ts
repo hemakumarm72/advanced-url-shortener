@@ -37,13 +37,15 @@ export const createShortenUrl = async (
   next: NextFunction,
 ) => {
   try {
-    const { longUrl, customAlias, topic, userId } = req.body
+    const user = req.session.user
+    if (!(user && user.userId)) throw invalidException('user not found')
+    const { longUrl, customAlias, topic } = req.body
 
     const alias = customAlias ? customAlias : await findUniqueCode()
 
     const add: UrlType = {
       urlId: generateUniqueId(),
-      userId,
+      userId: user.userId,
       longUrl,
       alias,
       topic,
@@ -104,8 +106,6 @@ export const redirectShortenUrl = async (
       browserVersion: userAgent.version,
       source: userAgent.source,
     }
-    // await urlLogsModel.add(urlLogs)
-    // Cache the URL in Redis
 
     if (userAgent.os !== 'unknown') {
       service.urlLogs(urlLogs)
