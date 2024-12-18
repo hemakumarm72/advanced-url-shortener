@@ -8,16 +8,17 @@ type UpdateType<T> = {
 
 type UsersType = {
   userId: string
+  googleId: string
   email: string
-  password: string
-  refreshToken: string
-  status: 'active' | 'suspended'
-  deletedAt: Date | null
+  name: string
+  picture: string
   createdAt?: Date
   updatedAt?: Date
 }
 
 type UpdateUserType = Partial<UsersType>
+
+type UserDocument = mongoose.Document & UsersType
 
 type UrlType = {
   urlId: string

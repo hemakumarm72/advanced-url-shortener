@@ -8,6 +8,7 @@ import session from 'express-session'
 
 import { connectMongo } from './mongo'
 import { redisConnect } from './redis'
+import passport from './passport'
 
 // Initialize store.
 export const config = async (app: express.Application) => {
@@ -39,7 +40,7 @@ export const config = async (app: express.Application) => {
     .use(useragent.express())
 
     .use(express.urlencoded({ extended: true }))
-
+    .use(passport.initialize())
     .get('/', (req, res) => {
       res.sendFile(path.join(__dirname, '../../public/index.html'))
     })
