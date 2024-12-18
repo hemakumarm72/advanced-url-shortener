@@ -38,9 +38,6 @@ export const createShortenUrl = async (
   try {
     const { longUrl, customAlias, topic, userId } = req.body
 
-    if (customAlias) {
-    }
-
     const alias = customAlias ? customAlias : await findUniqueCode()
 
     const add: UrlType = {
@@ -88,6 +85,7 @@ export const redirectShortenUrl = async (
     const urlLogs: UrlLogsType = {
       logId: generateUniqueId(),
       urlId: getUrl.urlId,
+      userId: getUrl.userId,
       sessionId: sessionId as string,
       geoIp: (req.headers['x-forwarded-for'] as string) || '127.0.0.1',
       os: userAgent.os as string,
@@ -96,9 +94,8 @@ export const redirectShortenUrl = async (
       browserVersion: userAgent.version,
       source: userAgent.source,
     }
-    req.session.save()
     // await urlLogsModel.add(urlLogs)
-    service.urlLogs(urlLogs)
+    userAgent.os !== 'unknown' ? service.urlLogs(urlLogs) : null
     res.redirect(`${getUrl.longUrl}`)
   } catch (error) {
     next(error)

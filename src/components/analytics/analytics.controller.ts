@@ -10,8 +10,9 @@ export const getAnalyticsByAlias = async (
 ) => {
   try {
     const { alias } = req.params
+    const { userId } = req.query
 
-    const result = await urlLogsModel.analyticsByAlias(alias)
+    const result = await urlLogsModel.analyticsByAlias(userId as string, alias)
 
     return handleResponse(res, 200, { result })
   } catch (error) {
@@ -47,6 +48,9 @@ export const getOverAllAnalytics = async (
   next: NextFunction,
 ) => {
   try {
+    const { userId } = req.query
+    const result = await urlLogsModel.overAllAnalytics(userId as string)
+    return handleResponse(res, 200, { result })
   } catch (error) {
     next(error)
   }

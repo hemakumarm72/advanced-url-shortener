@@ -36,6 +36,7 @@ type UrlLogsType = {
   logId: string
   sessionId: string
   urlId: string
+  userId: string
   geoIp: string
   os: string
   browser: string

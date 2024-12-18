@@ -5,7 +5,8 @@ const UrlLogsSchema = new mongoose.Schema(
   {
     logId: { type: String },
     sessionId: { type: String },
-    urlId: { type: String },
+    userId: { type: String }, // link ---> url schema table
+    urlId: { type: String }, // link ---> url schema table
     geoIp: { type: String },
     os: {
       type: String,

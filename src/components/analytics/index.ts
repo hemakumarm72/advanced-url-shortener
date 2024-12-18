@@ -5,6 +5,8 @@ import { GET_ANALYTICS_BY_ALIAS } from './analytics.validation'
 
 const router = express.Router()
 
+router.get('/overAll', controller.getOverAllAnalytics)
+
 router.get(
   '/:alias',
   checkSchema(GET_ANALYTICS_BY_ALIAS),
