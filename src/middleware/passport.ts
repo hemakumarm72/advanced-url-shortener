@@ -11,7 +11,7 @@ export const googleStrategy = new Strategy(
     clientID: GOOGLE_CLIENT_ID!,
     clientSecret: GOOGLE_CLIENT_SECRET!,
     //	authorizationURL: '/api/auth/google',
-    callbackURL: '/api/auth/google/callback',
+    callbackURL: `${process.env.GOOGLE_CLIENT_REDIRECT}/api/auth/google/callback`,
   },
   async (accessToken, refreshToken, profile, cb) => {
     // sign in auth
