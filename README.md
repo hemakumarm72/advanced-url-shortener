@@ -1,11 +1,19 @@
+
 # URL Shortener API Project
 
-## https://hemakumar.online/api-docs
 
+## API-DOCS
+
+## https://hemakumar.online/api-docs
 
 ## Overview
 
 This project implements a URL shortening service that allows users to create shortened URLs and get analytics for their usage. The system uses Redis for caching and session management, along with MongoDB for data storage and aggregation. Rate limiting is enforced to control the number of short links created within a set time period.
+
+### Database Model
+## https://dbdiagram.io/d/shorten-url-6764285f6ae6af4766b7c0fc
+
+
 
 ### Key Features:
 - **URL Shortening**: Allows users to shorten URLs with custom aliases.
@@ -24,6 +32,8 @@ This project implements a URL shortening service that allows users to create sho
 - **Redis**: In-memory data store for caching and session management.
 - **Swagger**: API documentation for easy integration and usage.
 
+
+
 ## Installation
 
 ```sh
@@ -31,7 +41,6 @@ This project implements a URL shortening service that allows users to create sho
 - Redis
 - TS-Node
 ```
-
 
 ### Prerequisites
 - Node.js installed on your machine.
@@ -68,8 +77,6 @@ REDIS_URL_PORT=6379  # Default Redis port
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 GOOGLE_CLIENT_REDIRECT=http://localhost:8000  # Change this to the production URL if needed
-
-
 ```
 
 ### Installation Setup.
@@ -78,8 +85,9 @@ GOOGLE_CLIENT_REDIRECT=http://localhost:8000  # Change this to the production UR
 npm install  # install package
 npm run server:build 
 npm run server:run # run server
-
+```
 
 ## docker
+```sh
 docker compose --build -d or docker-compose --build -d
 ```
