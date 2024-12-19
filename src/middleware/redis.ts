@@ -7,7 +7,7 @@ const redisConnect = new Redis(port, host, {
   db: 0,
   showFriendlyErrorStack: true, // See https://github.com/luin/ioredis#error-handling
   lazyConnect: false,
-  maxRetriesPerRequest: 20,
+  maxRetriesPerRequest: 1000,
 })
 
 redisConnect
