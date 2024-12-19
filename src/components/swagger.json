@@ -7,10 +7,10 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8000/api"
+      "url": "https://url.hemakumar.online/api"
     },
     {
-      "url": "http://128.2.33.34:8000/api"
+      "url": "http://localhost:8000/api"
     }
   ],
   "components": {
@@ -21,7 +21,7 @@
         "type": "oauth2",
         "flows": {
           "implicit": {
-            "authorizationUrl": "http://localhost:8000/api/auth/google",
+            "authorizationUrl": "https://url.hemakumar.online/api/auth/google",
             "scopes": {}
           }
         }
