@@ -19,6 +19,9 @@ export abstract class BaseModel<T extends Document> {
   async get(filter: Partial<T> = {}): Promise<T[]> {
     return await this.model.find(filter as any)
   }
+  async getByQuery(filter: Partial<T> = {}): Promise<T | null> {
+    return await this.model.findOne(filter as any)
+  }
 
   // Retrieve a document by its ID
   async getByFieldAndValue(

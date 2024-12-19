@@ -14,7 +14,7 @@ import passport from './passport'
 export const config = async (app: express.Application) => {
   app
   app
-  //  .set('trust proxy', true) //IP Trust the proxy
+    //  .set('trust proxy', true) //IP Trust the proxy
 
     .use(cors())
     .use(morgan('dev'))

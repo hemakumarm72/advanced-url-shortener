@@ -1,0 +1,535 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SHORTEN-URL-API",
+    "version": "1.0.0",
+    "description": "This is the API documentation"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api"
+    },
+    {
+      "url": "http://128.2.33.34:8000/api"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "googleAuth": {
+        "description": "ignore the clientId, just click authentication",
+
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "http://localhost:8000/api/auth/google",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/auth/me": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get the profile of the currently authenticated user.",
+        "description": "This endpoint returns the profile of the currently authenticated user. No authentication is required for this endpoint.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved user profile.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "The user's email address"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The user's full name"
+                    },
+                    "picture": {
+                      "type": "string",
+                      "description": "The googleAuth profile picture"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/shorten": {
+      "post": {
+        "tags": ["Shorten"],
+        "summary": "Shorten a long URL",
+        "description": "This endpoint accepts a long URL and optional custom alias and topic, and returns a shortened URL.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "longUrl": {
+                    "type": "string",
+                    "example": "https://google.com"
+                  },
+                  "customAlias": {
+                    "type": "string",
+                    "example": "xyz1"
+                  },
+                  "topic": {
+                    "type": "string",
+                    "example": "meme"
+                  }
+                },
+                "required": ["longUrl"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully shortened the URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "shortUrl": {
+                      "type": "string",
+                      "example": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/hPqc"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2024-12-19T06:41:13.459Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shorten/{alias}": {
+      "get": {
+        "tags": ["Shorten"],
+        "summary": "Redirect to the original URL",
+        "description": "This endpoint takes an alias and redirects the user to the corresponding original URL.",
+        "parameters": [
+          {
+            "name": "alias",
+            "in": "path",
+            "required": true,
+            "description": "The alias of the shortened URL",
+            "schema": {
+              "type": "string",
+              "example": "xyz1"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to the original URL",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "now": {
+                  "type": "object",
+                  "properties": {
+                    "rfc2822": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "404": {
+            "description": "Alias not found"
+          }
+        }
+      }
+    },
+    "/analytics/{alias}": {
+      "get": {
+        "tags": ["analytics"],
+        "summary": "Get analytics data for a specific alias",
+        "description": "Retrieves analytics for a specific alias.",
+        "parameters": [
+          {
+            "name": "alias",
+            "in": "path",
+            "required": true,
+            "description": "The alias of the shortened URL",
+            "schema": {
+              "type": "string",
+              "example": "xyz1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analytics data for the alias",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "result": [
+                    {
+                      "_id": "6763c0899936eea36cfd934c",
+                      "totalClicks": 12,
+                      "uniqueClicks": 1,
+                      "clicksByDate": [
+                        {
+                          "date": "2024-12-19",
+                          "count": 12
+                        },
+                        {
+                          "date": "2024-12-18",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-17",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-16",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-15",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-14",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-13",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-12",
+                          "count": 0
+                        }
+                      ],
+                      "osType": [
+                        {
+                          "osName": "Linux",
+                          "uniqueClicks": 1,
+                          "uniqueUsers": 1
+                        },
+                        {
+                          "osName": "Windows 10.0",
+                          "uniqueClicks": 1,
+                          "uniqueUsers": 1
+                        }
+                      ],
+                      "deviceType": [
+                        {
+                          "deviceName": "Android",
+                          "uniqueClicks": 1,
+                          "uniqueUsers": 1
+                        },
+                        {
+                          "deviceName": "Microsoft Windows",
+                          "uniqueClicks": 1,
+                          "uniqueUsers": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Alias not found"
+          }
+        }
+      }
+    },
+    "/analytics/topic": {
+      "get": {
+        "tags": ["analytics"],
+        "summary": "Get analytics data for a specific topic",
+        "description": "Retrieves analytics for a specific topic across all aliases.",
+        "parameters": [
+          {
+            "name": "topic",
+            "in": "query",
+            "required": true,
+            "description": "The topic to get analytics for",
+            "schema": {
+              "type": "string",
+              "example": "meme"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analytics data for the given topic",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "result": ["meme"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Topic not found"
+          }
+        }
+      }
+    },
+    "/analytics/topic/{topic}": {
+      "get": {
+        "tags": ["analytics"],
+        "summary": "Get analytics for a specific topic",
+        "description": "Retrieves detailed analytics data for a specific topic, including total clicks, unique clicks, clicks by date, and associated URLs.",
+        "parameters": [
+          {
+            "name": "topic",
+            "in": "path",
+            "required": true,
+            "description": "The topic to get analytics for",
+            "schema": {
+              "type": "string",
+              "example": "meme"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analytics data for the given topic",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "result": [
+                    {
+                      "_id": "67632b246bb28b22e670b5b0",
+                      "totalClicks": 26,
+                      "uniqueClicks": 1,
+                      "clicksByDate": [
+                        {
+                          "date": "2024-12-19",
+                          "count": 23
+                        },
+                        {
+                          "date": "2024-12-18",
+                          "count": 3
+                        },
+                        {
+                          "date": "2024-12-17",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-16",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-15",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-14",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-13",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-12",
+                          "count": 0
+                        }
+                      ],
+                      "urls": [
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/VKQE",
+                          "urlId": "787817a8-e97",
+                          "totalClicks": 0,
+                          "uniqueClicks": 0
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/eblj",
+                          "urlId": "6211bd7e-d17",
+                          "totalClicks": 0,
+                          "uniqueClicks": 0
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/HmhF",
+                          "urlId": "c1c7a81e-5b8",
+                          "totalClicks": 0,
+                          "uniqueClicks": 0
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/mYoC",
+                          "urlId": "227f4a4e-a1f",
+                          "totalClicks": 1,
+                          "uniqueClicks": 1
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/ngTD",
+                          "urlId": "1d2a93e3-c8e",
+                          "totalClicks": 2,
+                          "uniqueClicks": 1
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/hPqc",
+                          "urlId": "0f3fabe2-325",
+                          "totalClicks": 0,
+                          "uniqueClicks": 0
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/xyz1",
+                          "urlId": "c6423186-3f9",
+                          "totalClicks": 12,
+                          "uniqueClicks": 1
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/XXxy",
+                          "urlId": "2ae687f1-efb",
+                          "totalClicks": 0,
+                          "uniqueClicks": 0
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/Jfbz",
+                          "urlId": "70fa8576-807",
+                          "totalClicks": 0,
+                          "uniqueClicks": 0
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/bkYr",
+                          "urlId": "d650ce79-399",
+                          "totalClicks": 0,
+                          "uniqueClicks": 0
+                        },
+                        {
+                          "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/yWOB",
+                          "urlId": "15f98cad-dc0",
+                          "totalClicks": 11,
+                          "uniqueClicks": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Topic not found"
+          }
+        }
+      }
+    },
+    "/analytics/overAll": {
+      "get": {
+        "tags": ["analytics"],
+        "summary": "Get overall analytics",
+        "description": "Retrieves overall analytics data, including total URLs, total clicks, unique clicks, clicks by date, operating system types, and device types.",
+        "responses": {
+          "200": {
+            "description": "Overall analytics data",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "result": [
+                    {
+                      "_id": "67632b246bb28b22e670b5b0",
+                      "totalUrls": 11,
+                      "totalClicks": 26,
+                      "uniqueClicks": 1,
+                      "clicksByDate": [
+                        {
+                          "date": "2024-12-19",
+                          "count": 23
+                        },
+                        {
+                          "date": "2024-12-18",
+                          "count": 3
+                        },
+                        {
+                          "date": "2024-12-17",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-16",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-15",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-14",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-13",
+                          "count": 0
+                        },
+                        {
+                          "date": "2024-12-12",
+                          "count": 0
+                        }
+                      ],
+                      "osType": [
+                        {
+                          "osName": "Linux",
+                          "uniqueClicks": 1,
+                          "uniqueUsers": 1
+                        },
+                        {
+                          "osName": "Windows 10.0",
+                          "uniqueClicks": 1,
+                          "uniqueUsers": 2
+                        }
+                      ],
+                      "deviceType": [
+                        {
+                          "deviceName": "Android",
+                          "uniqueClicks": 1,
+                          "uniqueUsers": 1
+                        },
+                        {
+                          "deviceName": "Microsoft Windows",
+                          "uniqueClicks": 1,
+                          "uniqueUsers": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "googleAuth": []
+    }
+  ]
+}

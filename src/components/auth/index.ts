@@ -1,15 +1,15 @@
 ﻿import express from 'express'
 
 import passport from '../../middleware/passport'
-import { generateUniqueId } from '../../utils/random'
 import { isSession } from '../../utils/auth'
-
+import * as controller from './auth.controller'
 const router = express.Router()
 
 router.get(
   '/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }),
 )
+
 router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/404' }),
@@ -19,5 +19,5 @@ router.get(
   },
 )
 
-router.get('/me', isSession, (req, res) => res.json({ user: req.session.user }))
+router.get('/me', isSession, controller.getProfile)
 export default router

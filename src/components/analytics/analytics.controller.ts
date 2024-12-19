@@ -13,6 +13,11 @@ export const getAnalyticsByAlias = async (
     const { alias } = req.params
     const user = req.session.user
     if (!(user && user.userId)) throw invalidException('user not found')
+    const checkAlias = await urlModel.getByQuery({
+      userId: user.userId,
+      alias: alias,
+    })
+    if (!checkAlias) throw invalidException('alias is not found')
     const result = await urlLogsModel.analyticsByAlias(
       user.userId as string,
       alias,

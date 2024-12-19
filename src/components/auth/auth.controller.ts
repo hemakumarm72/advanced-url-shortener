@@ -1,22 +1,17 @@
 ﻿import { Request, Response, NextFunction } from 'express'
 import { handleResponse } from '../../middleware/requestHandle'
-import * as service from './auth.service'
 
-export const login = (req: Request, res: Response, next: NextFunction) => {
+export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   try {
-    // creates accessToken and refreshToken
-
-    const { email, password } = req.body
-
-    // const {} = service.getToken(userId)
-    // return handleResponse(res, 200, {
-    //   result: { accessToken, refreshToken },
-    // })
-  } catch (error) {}
+    const user = req.session.user
+    const result = {
+      email: user?.email,
+      name: user?.name,
+      picture: user?.picture,
+    }
+    return handleResponse(res, 200, { result })
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
 }
-
-export const register = () => {}
-
-export const googleSignIn = () => {}
-
-export const logOut = () => {}

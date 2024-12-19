@@ -8,17 +8,16 @@ export const isSession = async (
   next: NextFunction,
 ) => {
   try {
-    req.session.user = {
-      userId: '102ac18d-b02',
-      googleId: '106674716558566265579',
-      email: 'hemakumarm72@gmail.com',
-      name: 'Hema Kumar',
-      picture:
-        'https://lh3.googleusercontent.com/a/ACg8ocLa6jUWXJebRTTb0-lTc6-_5WBng5sCnoKlqliEucuDA4L-sCUY=s96-c',
-      sessionId: '3ZD8xmwA842wnpJ3Mt6vVxZNtFvRVh5U',
-    }
+    // req.session.user = {
+    //   userId: '102ac18d-b02',
+    //   googleId: '106674716558566265579',
+    //   email: 'hemakumarm72@gmail.com',
+    //   name: 'Hema Kumar',
+    //   picture:
+    //     'https://lh3.googleusercontent.com/a/ACg8ocLa6jUWXJebRTTb0-lTc6-_5WBng5sCnoKlqliEucuDA4L-sCUY=s96-c',
+    //   sessionId: '3ZD8xmwA842wnpJ3Mt6vVxZNtFvRVh5U',
+    // }
     const user = req.session.user
-    console.log(user)
 
     if (!(user && user.email)) {
       console.log('redirect url')
