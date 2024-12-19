@@ -1,6 +1,6 @@
 # URL Shortener API Project
 
-## https://url.hemakumar.online/api-docs
+## https://hemakumar.online/api-docs
 
 
 ## Overview
@@ -78,4 +78,8 @@ GOOGLE_CLIENT_REDIRECT=http://localhost:8000  # Change this to the production UR
 npm install  # install package
 npm run server:build 
 npm run server:run # run server
+
+
+## docker
+docker compose --build -d or docker-compose --build -d
 ```

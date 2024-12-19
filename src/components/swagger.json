@@ -166,7 +166,7 @@
     },
     "/analytics/{alias}": {
       "get": {
-        "tags": ["analytics"],
+        "tags": ["Analytics"],
         "summary": "Get analytics data for a specific alias",
         "description": "Retrieves analytics for a specific alias.",
         "parameters": [
@@ -265,21 +265,9 @@
     },
     "/analytics/topic": {
       "get": {
-        "tags": ["analytics"],
+        "tags": ["Analytics"],
         "summary": "Get analytics data for a specific topic",
         "description": "Retrieves analytics for a specific topic across all aliases.",
-        "parameters": [
-          {
-            "name": "topic",
-            "in": "query",
-            "required": true,
-            "description": "The topic to get analytics for",
-            "schema": {
-              "type": "string",
-              "example": "meme"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Analytics data for the given topic",
@@ -300,7 +288,7 @@
     },
     "/analytics/topic/{topic}": {
       "get": {
-        "tags": ["analytics"],
+        "tags": ["Analytics"],
         "summary": "Get analytics for a specific topic",
         "description": "Retrieves detailed analytics data for a specific topic, including total clicks, unique clicks, clicks by date, and associated URLs.",
         "parameters": [
@@ -364,67 +352,56 @@
                       "urls": [
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/VKQE",
-                          "urlId": "787817a8-e97",
                           "totalClicks": 0,
                           "uniqueClicks": 0
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/eblj",
-                          "urlId": "6211bd7e-d17",
                           "totalClicks": 0,
                           "uniqueClicks": 0
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/HmhF",
-                          "urlId": "c1c7a81e-5b8",
                           "totalClicks": 0,
                           "uniqueClicks": 0
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/mYoC",
-                          "urlId": "227f4a4e-a1f",
                           "totalClicks": 1,
                           "uniqueClicks": 1
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/ngTD",
-                          "urlId": "1d2a93e3-c8e",
                           "totalClicks": 2,
                           "uniqueClicks": 1
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/hPqc",
-                          "urlId": "0f3fabe2-325",
                           "totalClicks": 0,
                           "uniqueClicks": 0
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/xyz1",
-                          "urlId": "c6423186-3f9",
                           "totalClicks": 12,
                           "uniqueClicks": 1
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/XXxy",
-                          "urlId": "2ae687f1-efb",
                           "totalClicks": 0,
                           "uniqueClicks": 0
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/Jfbz",
-                          "urlId": "70fa8576-807",
                           "totalClicks": 0,
                           "uniqueClicks": 0
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/bkYr",
-                          "urlId": "d650ce79-399",
                           "totalClicks": 0,
                           "uniqueClicks": 0
                         },
                         {
                           "shortUrl": "https://htydfxqbyqs3gc45jpx6lp5yfu.srv.us/api/shorten/yWOB",
-                          "urlId": "15f98cad-dc0",
                           "totalClicks": 11,
                           "uniqueClicks": 1
                         }
@@ -443,7 +420,7 @@
     },
     "/analytics/overAll": {
       "get": {
-        "tags": ["analytics"],
+        "tags": ["Analytics"],
         "summary": "Get overall analytics",
         "description": "Retrieves overall analytics data, including total URLs, total clicks, unique clicks, clicks by date, operating system types, and device types.",
         "responses": {

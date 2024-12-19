@@ -4,6 +4,7 @@ services:
   # Redis Service
   redis:
     image: redis:latest
+    restart: unless-stopped
     container_name: redis
     ports:
       - "6379:6379"  # Redis port (local Redis only)

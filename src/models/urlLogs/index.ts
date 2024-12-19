@@ -493,7 +493,6 @@ class UrlLogsModel extends BaseModel<UrlLogsDocument> {
                       '$$url.alias',
                     ],
                   },
-                  urlId: '$$url.urlId',
                   totalClicks: {
                     $size: {
                       $filter: {
