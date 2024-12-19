@@ -14,7 +14,7 @@ This project implements a URL shortening service that allows users to create sho
 - **Redis Session Store**: Manages user session data in Redis for quick retrieval.
 - **MongoDB Integration**: Stores URL mappings, click statistics, and analytics data in MongoDB.
 - **Optimized Data Aggregation**: Uses MongoDB aggregation to efficiently fetch and process data.
-- **Memory Optimization**: Reuses components to minimize memory usage and optimize performance.
+- **Memory Optimization**: Reuses functions to minimize memory usage and optimize performance.
 
 ## Technologies Used
 
