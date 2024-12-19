@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Redis Service
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    container_name: redis
+    ports:
+      - "6379:6379"  # Redis port (local Redis only)
+
+  # Node.js API Service (Your Application)
+  api:
+    build:
+      context: .
+    container_name: node_api
+    ports:
+      - "8000:8000"  # Node.js app port
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - '.env'
+    depends_on:
+      - redis
+
+

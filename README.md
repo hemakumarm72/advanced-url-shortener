@@ -43,38 +43,32 @@ This project implements a URL shortening service that allows users to create sho
 #### Environment variables setup
 
 ```sh
-NODE_ENV=development # development | production
+# General Environment Settings
+NODE_ENV=development  # development | production
 IS_MAINTENANCES=false
 
+# Port number for the server
+PORT=8000
 
+# Server Host URL (Set your domain or localhost URL here)
+BASE_URL=http://localhost:8000  # Change this if you have a production URL
 
-# Port number
-PORT=8000  
+# MongoDB (Remote)
+DB_HOST=cluster0.xxx.mongodb.net  # Remote MongoDB host
+DB_PROTOCOL=mongodb+srv  # The protocol used for MongoDB connections
+DB_NAME=your_db_name  # Your MongoDB database name
+DB_USER=your_mongo_user  # MongoDB username
+DB_PASS=your_mongo_password  # MongoDB password
 
+# Redis (Local or Remote)
+REDIS_URL_HOST=127.0.0.1  # Local Redis URL or IP (use actual remote IP if Redis is remote)
+REDIS_URL_PORT=6379  # Default Redis port
 
-# Server Host
-BASE_URL=Domain # https://Domain.com or http://localhost:8000
+# Google Authentication Settings
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CLIENT_REDIRECT=http://localhost:8000  # Change this to the production URL if needed
 
-
-
-#MongoDB
-DB_HOST=cluster0.xxx.mongodb.net
-DB_PROTOCOL=mongodb+srv
-DB_NAME=xxxx
-DB_USER=xxxx
-DB_PASS=xxxxx
-
-
-#Redis
-REDIS_URL_HOST=127.0.0.1
-REDIS_URL_PORT=6379 #default port
-
-
-
-# Google Auth
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-GOOGLE_CLIENT_REDIRECT='http://localhost:8000'  # domain or localhost
 
 ```
 

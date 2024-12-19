@@ -8,7 +8,7 @@
     "prettier": "prettier --write .",
     "dev": "nodemon --exec ts-node ./src/bin/www.ts",
     "server:build": "npm run build && cp -r ./public  ./dist",
-    "server:run": "node dist/src/bin/www.js",
+    "server:run": "node dist/bin/www.js",
     "build": "tsc",
     "testCase": "jest --watchAll --detectOpenHandles",
     "testCaseByFile": "jest --watchAll --detectOpenHandles ./__tests__/encryptedModules.test.ts"
