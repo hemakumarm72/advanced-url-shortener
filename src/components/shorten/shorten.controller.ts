@@ -104,7 +104,7 @@ export const redirectShortenUrl = async (
       urlId: getUrl.urlId,
       userId: getUrl.userId,
       sessionId: sessionId as string,
-      geoIp: (req.headers['x-forwarded-for'] as string) || '127.0.0.1',
+      geoIp: (req.headers['x-forwarded-for'] as string) || (req.ip as string),
       os: userAgent.os as string,
       platform: userAgent.platform,
       browser: userAgent.browser,
