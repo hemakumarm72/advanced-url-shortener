@@ -56,3 +56,7 @@ export const invalidException = (
 ) => {
   return new HttpException(400, error || DATA_NOT_FOUND, subStatusCode)
 }
+
+export const dataNotExit = (error: string, subStatusCode: number = 5001) => {
+  return new HttpException(404, error || DATA_NOT_FOUND, subStatusCode)
+}

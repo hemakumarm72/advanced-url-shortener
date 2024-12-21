@@ -4,7 +4,7 @@ import { urlModel } from '../../models/urls'
 import { UrlLogsType, UrlType } from '../../models/@types'
 import { generateUniqueId } from '../../utils/random'
 import { handleResponse } from '../../middleware/requestHandle'
-import { invalidException } from '../../utils/apiErrorHandler'
+import { dataNotExit, invalidException } from '../../utils/apiErrorHandler'
 import * as service from './shorten.service'
 import { Details } from 'express-useragent'
 import { redisConnect } from '../../middleware/redis'
@@ -83,7 +83,7 @@ export const redirectShortenUrl = async (
       getUrl = JSON.parse(cachedUrl)
     } else {
       getUrl = await urlModel.getByFieldAndValue('alias', alias) // TODO: mongodb
-      if (!getUrl) throw invalidException('url not found')
+      if (!getUrl) throw dataNotExit('url not found')
       await redisConnect.set(
         `shortUrl:${alias}`,
         JSON.stringify(getUrl),
