@@ -19,5 +19,10 @@ router.get(
   },
 )
 
+router.get('/logout', isSession, controller.logout)
+
 router.get('/me', isSession, controller.getProfile)
+
+router.put('/update', controller.updateProfile)
+
 export default router

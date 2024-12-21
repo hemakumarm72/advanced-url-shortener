@@ -11,17 +11,18 @@ const config = {
   ssl: true,
 }
 
-export const connectMongo = async () => {
-  mongoose.set('strictQuery', false)
-  await mongoose
-    .connect(mongoUri, config)
-    .then((db: any) => {
-      console.log(`Connected to ${process.env.DB_NAME} DB`)
-    })
-    .catch((err: any) => {
-      console.log(err)
-      console.error(err)
-    })
-
-  return Promise.resolve()
-}
+export const connectMongo = () =>
+  new Promise((resolve, reject) => {
+    mongoose.set('strictQuery', false)
+    mongoose
+      .connect(mongoUri, config)
+      .then((db: any) => {
+        console.log(`Connected to ${process.env.DB_NAME} DB`)
+        resolve(db)
+      })
+      .catch((err: any) => {
+        console.log(err)
+        console.error(err)
+        reject(err)
+      })
+  })
